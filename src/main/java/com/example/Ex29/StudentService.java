@@ -12,7 +12,7 @@ public class StudentService {
         this.studentRepo = studentRepo;
     }
 
-    public Student updateStatus(Long id, boolean isWorking){
+    public Student updateStatus(Long id, boolean isWorking) {
         Student opStudent = studentRepo.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Student not found!"));
         opStudent.setWorking(isWorking);

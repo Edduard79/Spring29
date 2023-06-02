@@ -4,7 +4,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,7 @@ public class StudentControllerTests {
 
     @Test
     public void testGetAllStudents() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/students"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/student"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print());
     }
@@ -45,7 +47,7 @@ public class StudentControllerTests {
     @Test
     public void testGetStudentById() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/students/{id}", 1L))
+        mockMvc.perform(MockMvcRequestBuilders.get("/student/{id}", 1L))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
                 .andDo(print());
@@ -55,7 +57,7 @@ public class StudentControllerTests {
     public void testUpdateStudent() throws Exception {
         String updatedStudentJson = "{\"name\":\"Andrea\",\"surname\":\"Verdi\",\"working\":false}";
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/students/{id}", 1L)
+        mockMvc.perform(MockMvcRequestBuilders.put("/student/{id}", 1L)
                         .content(updatedStudentJson)
                         .contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -68,17 +70,17 @@ public class StudentControllerTests {
 
     @Test
     public void testUpdateIsWorking() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.patch("/students/{id}", 1L)
-                        .param("working", "true"))
+        mockMvc.perform(MockMvcRequestBuilders.patch("/student/{id}", 1L)
+                        .param("isWorking", "true"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.working").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.isWorking").value(true))
                 .andDo(print());
     }
 
     @Test
     public void testDeleteStudent() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/students/{id}", 1L))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/student/{id}", 1L))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(print());
     }
